@@ -16,7 +16,7 @@ namespace Fifteen
         public Game(int size)
         {
             if(size < 2) size = 2;
-            if (size > 5) size = 5;
+            if (size > 9) size = 9;
             this.size = size;
             map = new int[size, size];
         }
@@ -27,24 +27,26 @@ namespace Fifteen
             {
                 for (int y = 0; y < size; y++)
                 {
-                    map[x, y] = CoordsToPos(x, y) + 1;
+                    map[x, y] = CoordsToPos(x, y);
                 }
             }
             spacex = size - 1;
             spacey = size - 1;
-            map[spacex, spacey] = 0;
+            map[spacex, spacey] = -1;
         }
 
         public void Shift(int position)
         {
             int x, y;
             PositionToCoords(position, out x, out y);
-            if(Math.Abs(spacex - x) + Math.Abs(spacey - y) != 1)
+            
+            if (Math.Abs(spacex - x) + Math.Abs(spacey - y) != 1)
             {
                 return;
             }
+            
             map[spacex, spacey] = map[x, y];
-            map[x, y] = 0;
+            map[x, y] = -1;
             spacex = x;
             spacey = y;
         }
@@ -57,7 +59,7 @@ namespace Fifteen
                 for (int y = 0; y < size; y++)
                 {
                     if (!(x == size - 1 && y == size - 1))
-                        if (map[x, y] != CoordsToPos(x, y) + 1)
+                        if (map[x, y] != CoordsToPos(x, y))
                             return false;
                 }
             }
